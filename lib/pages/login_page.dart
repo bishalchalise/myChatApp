@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mychat/components/my_button.dart';
 import 'package:mychat/components/my_text_field.dart';
+import 'package:mychat/services/auth/auth_service.dart';
+import 'package:provider/provider.dart';
+// import 'package:mychat/services/auth/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -13,6 +16,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  void signIn() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.signIn(
+        emailController.text,
+        passwordController.text,
+      );
+   
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Error: ${e.toString()}"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Icon(
                   Icons.message,
-                  size: 80,
+                  size: 100,
                   color: Colors.grey[800],
                 ),
                 const SizedBox(
@@ -61,13 +82,13 @@ class _LoginPageState extends State<LoginPage> {
                   height: 50.0,
                 ),
                 MyButton(
-                  onTap: () {},
+                  onTap: signIn,
                   text: "Sign In",
                 ),
                 const SizedBox(
                   height: 50.0,
                 ),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
