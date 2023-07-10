@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mychat/services/auth/auth_service.dart';
 import 'package:provider/provider.dart';
 
-import 'chat_page.dart';
+import '../services/chat/pages/chat_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
